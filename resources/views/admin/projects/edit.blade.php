@@ -27,15 +27,24 @@
             <div class="invalid-feedback">{{ $message }}</div>
         @enderror
     </div>
+    
     <div class="mb-3">
-        <label for="category_id" class="form-label">descrizione</label>
-        <select class="form-select @error('category_id') is-invalid @enderror" name="category_id" id="category_id">
-            <option @selected(old('category_id', $project->category_id)=='') value="">Nessuna categoria</option>
-            @foreach ($categories as $category)
-                <option @selected(old('category_id', $project->category_id)==$category->id) value="{{$category->id}}">{{$category->name}}</option>
-            @endforeach
-        </select>
+
+
+    @foreach($technologies as $technology)
+
+        @if ($errors->any())
+            <input id="tech_{{$technology->id}}" @if (in_array($technology->id , old('technologies', []))) checked @endif type="checkbox" name="technologies[]" value="{{$technology->id}}">
+        @else
+            <input id="tech_{{$technology->id}}" @if ($project->technologies->contains($technology->id)) checked @endif type="checkbox" name="technologies[]" value="{{$technology->id}}">
+        @endif
+
+        <label for="tech_{{$technology->id}}" class="form-label">{{$technology->name}}</label>
+        <br>
+
+    @endforeach
     </div>
+    
     
     <button type="submit" class="btn btn-secondary">Salva</button>
 

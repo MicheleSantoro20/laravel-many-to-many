@@ -53,7 +53,6 @@ class ProjectController extends Controller
         $newProject= Project::create($validated_data);
 
         $newProject->technologies()->attach($request->technology);
-
         return redirect()->route('admin.projects.show',['project' => $newProject->slug]);
     }
 
@@ -76,7 +75,8 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        return view('admin.projects.edit', compact('project'));
+        $technologies=Technology::all();
+        return view('admin.projects.edit', compact('project', 'technologies'));
     }
 
     /**
@@ -91,6 +91,7 @@ class ProjectController extends Controller
         $validated_data = $request->validated();
         $validated_data['slug'] = str::slug($request->title, '-');
         $project->update($validated_data);
+        $project->technologies()->sync($request->technologies);
         return redirect()->route('admin.projects.show',['project' => $project->slug]);
     }
 

@@ -29,6 +29,7 @@ class UpdateProjectsRequest extends FormRequest
             'description' => 'max:65000|nullable',
             'url' => 'url',
             'category_id' => 'nullable | exists:categories,id',
+            'technologies' => 'exists:technologies,id'
         ];
     }
 }
