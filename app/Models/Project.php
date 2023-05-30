@@ -21,6 +21,7 @@ class Project extends Model
         'description',
         'url',
         'slug',
-        'category_id'
+        'category_id',
+        'technologies'
     ];
 }
